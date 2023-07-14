@@ -34,16 +34,13 @@
  font-weight: bold;
 }
 
-
-
-
 .buttermilk{
     background-color:#fff;background-image:linear-gradient(#fff7ef, #fff);
     background-image:-webkit-linear-gradient(#fff7ef, #fff);
     background-image:-moz-linear-gradient(#fff7ef, #fff);
     background-image:-ms-linear-gradient(#fff7ef, #fff);
     background-image:-o-linear-gradient(#fff7ef, #fff);
-    padding:50px 40px;
+    padding:0px 0px;
     border:1px solid #efe8e1;
     padding-bottom:20px;
 }
@@ -58,7 +55,7 @@
 }
 
 .curdbgpro{
-    background-color:#fff;
+    background-color:#bc3333;
     background-image:linear-gradient(rgba(10, 77, 123, 0.1), #fff);
     background-image:-webkit-linear-gradient(rgba(10, 77, 123, 0.1), #fff);
     background-image:-moz-linear-gradient(rgba(10, 77, 123, 0.1), #fff);
@@ -66,7 +63,7 @@
     background-image:-o-linear-gradient(rgba(10, 77, 123, 0.1), #fff);
 }
 
-.goodnessseccont img{
+.green img{
     width:100%;
 }
 
@@ -81,6 +78,18 @@
     
 }
 
-.goodnesssec a{
+.goodness a{
     text-decoration: none;
 }
+h1{
+    text-align: center;
+    font-size: 50px;
+    font-weight: 700;
+    color: #041d8d;
+   }
+.container{
+    text-align: center;
+    font-size: 50px;
+    font-weight: 700;
+     color: #a528c4;
+   }

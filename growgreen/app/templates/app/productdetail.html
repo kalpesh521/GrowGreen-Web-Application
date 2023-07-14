@@ -1,0 +1,43 @@
+{% extends 'app/base.html' %} 
+{% load static %} 
+{% block title %}Home{% endblock title %} 
+
+{% block main-content %}
+
+<h2 class="text-center mt-4" style="font-size:40px; font-family:Arial; font-weight:700;">Product Details</h2>
+<hr>
+    <div class="container-fluid my-4 ">
+        <div class = "row flex justify-content-between mx-5">
+            <div class = "img col-sm text-center md-4 my-5">
+                <img src="{{product.image.url}}" width ="270px" height='300px' class = "image mx-auto " alt="">
+            </div>
+            <div class = "productdetail col-sm-7 ">
+                <h2 class="text-center" style="font-family : georgia ; font-size : 30px ;font-weight:500">{{product.title}}</h2>
+                 <hr  class="styled-hr">
+                {% comment %} <small class= " text-decoration-line text-muted fs-5"><del>  ₹{{product.selling_price}}/-</small> {% endcomment %}
+                </del>
+                 <h5>Description : </h5>
+                <ul class="fs-5 text-justify"  style=" text-align : justify ; font-family : georgia ; font-size : 16px">
+                    <li class="text-justify">{{product.description}}</li>
+                </ul>
+                <p class="text-success mx-3" style="font-family : georgia ;font-size : 20px"> Contribution : ₹{{product.discounted_price}}</p>
+                 <br>
+                    <form action="/add_to_cart" class="d-inline">
+                        <input type="hidden" name="prod_id" value="{{product.id}}"> 
+                        <button class="btn btn-primary shadow px-5 py-2 ms-4 rounded-5" type="submit" style =" font-weight:600">ADD TO CART</button>
+                    </form>
+                    
+                    <a href={% url 'showcart' %} class="btn text-light btn-warning shadow rounded-5 px-5 py-2 ms-4" style =" font-weight:600">PLANT NOW</a>
+ 
+                    {% if wishlist%}
+                        <a pid={{product.id}} class="minus-wishlist btn btn-danger  rounded-5  shadow px-5 py-2 ms-4"><i class="fas fa-heart fa-lg"></i></a>
+                    {% else %}
+                        <a pid={{product.id}} class="plus-wishlist btn btn-success rounded-5  shadow px-5 py-2 ms-4"><i class="fas fa-heart fa-lg"></i></a>
+                    {% endif %}
+             </div>
+
+        </div>  
+    </div>
+
+{% endblock main-content %}
+ 

@@ -25,7 +25,7 @@ $('#slider1, #slider2, #slider3').owlCarousel({
 $('.plus-cart').click(function(){
     var id=$(this).attr("pid").toString();
     var eml=this.parentNode.children[2] 
-    $.ajax({
+     $.ajax({
         type:"GET",
         url:"/pluscart",
         data:{
@@ -69,7 +69,7 @@ $('.remove-cart').click(function(){
         success:function(data){
             document.getElementById("amount").innerText=data.amount 
             document.getElementById("totalamount").innerText=data.totalamount
-            eml.parentNode.parentNode.parentNode.parentNode.remove() 
+            eml.parentNode.parentNode.parentNode.parentNode.parentNode.remove() 
         }
     })
 })
@@ -85,7 +85,7 @@ $('.plus-wishlist').click(function(){
         },
         success:function(data){
             //alert(data.message)
-            window.location.href = `http://localhost:8000/product-detail/${id}`
+            window.location.href = `http://localhost:8000/productdetails/${id}`
         }
     })
 })
@@ -100,7 +100,7 @@ $('.minus-wishlist').click(function(){
             prod_id:id
         },
         success:function(data){
-            window.location.href = `http://localhost:8000/product-detail/${id}`
+            window.location.href = `http://localhost:8000/productdetails/${id}`
         }
     })
 })

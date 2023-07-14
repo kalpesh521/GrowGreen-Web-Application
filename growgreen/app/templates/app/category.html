@@ -1,0 +1,34 @@
+{% extends 'app/base.html' %}
+{% load static %} 
+{% block title %}Category{% endblock title %} 
+{% comment %} # following code shows the category page of the website. {% endcomment %}
+{% block main-content %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-sm mt-4  ">
+                <div class="list-group  ">
+                {% for val in title %} 
+                <a href="{% url 'category-title' val.title %}" class ="list-group-item list-group-item-action " aria-current="true">{{val.title}}</a>
+                {% endfor %}
+                </div>
+            </div>
+          {% comment %} # following code shows the products of the category. {% endcomment %}
+        <div class="col-sm-9">
+            <div class="row">
+                {% for prod in product%}
+                    <div class="col text-center my-3">
+                        <a href="{% url 'product-detail' prod.id%}" class ="btn">
+                        <div> 
+                            <img src="{{ prod.image.url }}" class="rounded-3 shadow border border-muted border-3" width ="250px" height='250px'/>
+                                <div class="fw-bold mt-2">{{prod.title}}</div>
+                                <div class ="fw-bold text-danger">Contribution :  ₹{{ prod.discounted_price}} 
+                                    {% comment %} <small class="fw-light text-decoration-line-through">{{ prod.selling_price}}</small> {% endcomment %}
+                                </div>
+                            </div>
+                        </a>  
+                    </div>                              
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock main-content %}

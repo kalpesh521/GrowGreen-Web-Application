@@ -76,10 +76,14 @@ WSGI_APPLICATION = 'growgreen.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME':'growgreen',
+        'USER':'kalpesh',
+        'PASSWORD':'1234',
     }
 }
+# Superuser: kalpesh
+# Password: Kalpesh@785 (pgadmin master password)
 
 
 # Password validation
@@ -116,12 +120,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR/'media'
-
+LOGIN_REDIRECT_URL = '/profile/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # email backend for testing purposes only - prints emails to console instead of sending them to users 
+
+RAZOR_KEY_ID = "rzp_test_wjdF91h72DcNS0"
+RAZOR_KEY_SECRET = "iEMPYb6e08SfydOIbIWXCGEF"
