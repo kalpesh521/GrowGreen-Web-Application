@@ -133,3 +133,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # email backend
 
 RAZOR_KEY_ID = "rzp_test_wjdF91h72DcNS0"
 RAZOR_KEY_SECRET = "iEMPYb6e08SfydOIbIWXCGEF"
+
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'Strict'
