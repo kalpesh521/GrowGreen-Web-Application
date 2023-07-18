@@ -80,10 +80,10 @@ DATABASES = {
         'NAME':'growgreen',
         'USER':'kalpesh',
         'PASSWORD':'1234',
+        'OPTIONS': {'sslmode': 'require'},
     }
 }
-# Superuser: kalpesh
-# Password: Kalpesh@785 (pgadmin master password)
+
 
 
 # Password validation
