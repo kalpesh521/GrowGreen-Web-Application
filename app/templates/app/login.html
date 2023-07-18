@@ -8,14 +8,14 @@
      <div class=" p-4">
       <div class="col-sm-6 offset-sm-3 my-3 P-5 bg-info bg-opacity-10 rounded-5 ">
             <form action="" novalidate class= 'rounded-5 shadow p-5' method="post">
+              {% csrf_token %}
+
                 <div class="d-flex justify-content-center">
                   <img src="{% static 'app/images/products/user.png'%}" class="img-fluid rounded-5 shadow" alt="login image">
                    
                 </div>
                 <h2 class="text-center text-dark mt-4">SIGN IN</h2>
-
-              
-            {% csrf_token %}
+                <hr>
             {% for fm in form %}
               {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small><br>  
             {% endfor %} 

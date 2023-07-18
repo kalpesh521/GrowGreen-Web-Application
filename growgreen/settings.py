@@ -41,7 +41,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -136,5 +136,7 @@ RAZOR_KEY_SECRET = "iEMPYb6e08SfydOIbIWXCGEF"
 
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = 'Strict'
-ALLOWED_ORIGINS = ['http://*', 'https://*']
-CSRF_TRUSTED_ORIGINS = ALLOWED_ORIGINS.copy()
+# ALLOWED_ORIGINS = ['http://*', 'https://*']
+# CSRF_TRUSTED_ORIGINS = ALLOWED_ORIGINS.copy()
+
+CSRF_TRUSTED_ORIGINS = ['https://growgreen.azurewebsites.net', 'https://growgreen.azurewebsites.net']
