@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-5aq&7q)5y109oxo$e63@s2b=2+5cw(ns-*r#lqi&d8pf!q%kb_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -80,7 +80,7 @@ DATABASES = {
         'NAME':'growgreen',
         'USER':'kalpesh',
         'PASSWORD':'1234',
-        'OPTIONS': {'sslmode': 'require'},
+        # 'OPTIONS': {'sslmode': 'require'},
     }
 }
 
