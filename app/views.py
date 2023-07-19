@@ -401,12 +401,4 @@ class TrackView(View):
     
     
 
-from django.http import HttpResponseForbidden
-from django.template import loader
-
-def custom_csrf_failure_view(request, reason=''):
-    template = loader.get_template('custom_csrf_failure.html')
-    context = {
-        'reason': reason,
-    }
-    return HttpResponseForbidden(template.render(context, request))
+ 
