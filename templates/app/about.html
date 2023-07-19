@@ -1,0 +1,54 @@
+{% extends 'app/base.html' %} 
+{% load static %} 
+{% block title %}about{% endblock title %} 
+
+{% block banner-slider %}
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img
+        src="{% static 'images/banner/pic2.jpg' %}"
+        class="d-block w-100"
+        alt="banner slider"
+        height="500"
+      />
+        <div class="carousel-caption mb-5 d-none d-lg-block " style="font-size:55px; font-family:sans-serif; font-weight:500;">
+        <h5 style="font-size: 100px; font-family: Arial, sans-serif; font-weight: bold;">GROW GREEN</h5>
+        <p>Trees: Nature's gift, our responsibility.</p>
+      </div>  
+    </div>
+     
+</div>
+{% endblock banner-slider %}
+{% block main-content %}
+
+<div class= "container-fluid mt-3 " style="align-item:justify">
+    <br>
+    <h2 class='text-center' style="font-family : Arial; font-size :35px ;font-weight:700">Our Mission</h2>
+    <br>
+    <div class = "row border bg-secondary bg-opacity-10  border-success rounded-3 border-3 p-2 mx-5"style="align-item:justify">
+        <p   style="align-item:justify ;font-size:23px">
+          &nbsp;&nbsp;&nbsp;&nbsp;Our mission is rooted in promoting sustainable development and preserving the natural environment. Through active community engagement, education, and the implementation of innovative techniques, we are dedicated to making a positive impact on our planet.
+         <br>
+          &nbsp;&nbsp;&nbsp; One of our primary goals is to empower local communities by providing them with the knowledge and resources needed to actively participate in environmental conservation efforts. We believe that by fostering a sense of ownership and responsibility, individuals within these communities can become agents of change, making a significant difference in the preservation of our natural resources.
+        <br>
+           
+          &nbsp;&nbsp;&nbsp; Together, with the collective efforts of our dedicated team, community partners, and passionate individuals like you, we can work towards a sustainable future where the natural environment thrives, and communities flourish. Join us on this important journey as we create lasting positive change for our planet and future generations.
+         </p>
+    </div>
+    <br>
+    <h2 class='text-center mt-5'  style="font-family : Arial; font-size : 35px ;font-weight:700">Our Vision</h2>
+    
+    <br>
+    <div class = "row border border-success bg-secondary bg-opacity-10  rounded-3 border-3 p-2 mx-5"style="align-item:justify">
+        <p  style="align-item:justify;font-size:23px">
+          &nbsp;&nbsp;&nbsp;&nbsp;In our vision, we strive for a world where the environment is not only protected and preserved but also cherished and celebrated. We envision a future where humans coexist harmoniously with nature, understanding the intricate interdependencies between our actions and the health of the planet. 
+         <br>
+          &nbsp;&nbsp;&nbsp; To achieve this vision, we recognize the power of trees as catalysts for positive change. Trees, with their remarkable ability to sequester carbon, purify the air, and provide habitat for countless species, hold the key to creating a sustainable and biodiverse world for future generations.
+        <br>
+           
+          &nbsp;&nbsp;&nbsp;Together, let us embark on this journey of environmental revolution, where our collective actions, fueled by passion and guided by knowledge, create a legacy of sustainability. Join us as we work towards a future where humans and nature coexist in harmony, leaving a positive and lasting imprint on our precious Earth for generations to come.
+         </p>
+    </div>
+</div>
+{% endblock main-content %}
