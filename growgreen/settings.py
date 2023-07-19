@@ -27,7 +27,12 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
+# import dj_database_url
+# import os 
 
+# DATABASES = {
+#     'default': dj_database_url.config(default=os.environ.get('POSTGRES_URL'))
+# }
 # Application definition
 
 INSTALLED_APPS = [
@@ -136,7 +141,11 @@ RAZOR_KEY_SECRET = "iEMPYb6e08SfydOIbIWXCGEF"
 
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = 'Strict'
-# ALLOWED_ORIGINS = ['http://*', 'https://*']
-# CSRF_TRUSTED_ORIGINS = ALLOWED_ORIGINS.copy()
+ALLOWED_ORIGINS = ['http://*', 'https://*']
+CSRF_TRUSTED_ORIGINS = ALLOWED_ORIGINS.copy()
 
-CSRF_TRUSTED_ORIGINS = ['https://growgreen.azurewebsites.net', 'https://growgreen.azurewebsites.net']
+# CSRF_TRUSTED_ORIGINS = ['https://growgreen.azurewebsites.net', 'https://growgreen.azurewebsites.net']
+
+ 
+ 
+# SECURE_SSL_REDIRECT=0
