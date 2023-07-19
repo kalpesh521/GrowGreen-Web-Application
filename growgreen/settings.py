@@ -148,7 +148,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # email backend
 RAZOR_KEY_ID = "rzp_test_wjdF91h72DcNS0"
 RAZOR_KEY_SECRET = "iEMPYb6e08SfydOIbIWXCGEF"
 
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = 'Strict'
 ALLOWED_ORIGINS = ['http://*', 'https://*']
 CSRF_TRUSTED_ORIGINS = ALLOWED_ORIGINS.copy()
