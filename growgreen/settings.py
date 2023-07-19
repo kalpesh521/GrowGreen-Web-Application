@@ -152,4 +152,10 @@ CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = 'Strict'
 ALLOWED_ORIGINS = ['http://*', 'https://*']
 CSRF_TRUSTED_ORIGINS = ALLOWED_ORIGINS.copy()
- 
+# settings.py
+
+# Other settings...
+
+# Specify the path to your custom view for CSRF failure
+CSRF_FAILURE_VIEW = 'app.views.custom_csrf_failure_view'
+
