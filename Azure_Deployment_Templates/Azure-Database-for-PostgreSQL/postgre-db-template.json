@@ -1,0 +1,53 @@
+{
+    "sku": {
+        "name": "Standard_D2s_v3",
+        "tier": "GeneralPurpose"
+    },
+    "systemData": {
+        "createdAt": "2023-07-18T11:58:40.5456499Z"
+    },
+    "properties": {
+        "authConfig": {
+            "activeDirectoryAuth": "Disabled",
+            "passwordAuth": "Enabled"
+        },
+        "dataEncryption": {
+            "type": "SystemManaged"
+        },
+        "fullyQualifiedDomainName": "growgreenngo-server.postgres.database.azure.com",
+        "version": "14",
+        "minorVersion": "7",
+        "administratorLogin": "nhpuzduxxj",
+        "state": "Ready",
+        "availabilityZone": "1",
+        "storage": {
+            "storageSizeGB": 128
+        },
+        "backup": {
+            "backupRetentionDays": 7,
+            "geoRedundantBackup": "Disabled",
+            "earliestRestoreDate": "2023-07-18T12:03:38.3885062+00:00"
+        },
+        "network": {
+            "publicNetworkAccess": "Disabled",
+            "delegatedSubnetResourceId": "/subscriptions/cfe77da3-9074-4f47-a959-c0ddfb2b4b94/resourceGroups/kalpeshRG/providers/Microsoft.Network/virtualNetworks/GrowGreenNGOVnet/subnets/GrowGreenNGODbSubnet",
+            "privateDnsZoneArmResourceId": "/subscriptions/cfe77da3-9074-4f47-a959-c0ddfb2b4b94/resourceGroups/kalpeshRG/providers/Microsoft.Network/privateDnsZones/privatelink.postgres.database.azure.com"
+        },
+        "highAvailability": {
+            "mode": "Disabled",
+            "state": "NotEnabled"
+        },
+        "maintenanceWindow": {
+            "customWindow": "Disabled",
+            "dayOfWeek": 0,
+            "startHour": 0,
+            "startMinute": 0
+        },
+        "replicationRole": "Primary",
+        "replicaCapacity": 5
+    },
+    "location": "East US",
+    "id": "/subscriptions/cfe77da3-9074-4f47-a959-c0ddfb2b4b94/resourceGroups/kalpeshRG/providers/Microsoft.DBforPostgreSQL/flexibleServers/growgreenngo-server",
+    "name": "growgreenngo-server",
+    "type": "Microsoft.DBforPostgreSQL/flexibleServers"
+}

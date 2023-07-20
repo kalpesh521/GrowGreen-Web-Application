@@ -1,0 +1,7 @@
+﻿NAME,TYPE,LOCATION,
+"ASP-kalpeshRG-ae1e","App Service plan","East US"
+"GrowGreenNGO","App Service","East US"
+"growgreenngo-server","Azure Database for PostgreSQL flexible server","East US"
+"GrowGreenNGOVnet","Virtual network","East US"
+"privatelink.postgres.database.azure.com","Private DNS zone","Global"
+"privatelink.redis.cache.windows.net","Private DNS zone","Global"

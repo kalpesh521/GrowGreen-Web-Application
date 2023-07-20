@@ -1,0 +1,702 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sites_GrowGreenNGO_name": {
+            "defaultValue": "GrowGreenNGO",
+            "type": "String"
+        },
+        "serverfarms_ASP_kalpeshRG_ae1e_externalid": {
+            "defaultValue": "/subscriptions/cfe77da3-9074-4f47-a959-c0ddfb2b4b94/resourceGroups/kalpeshRG/providers/Microsoft.Web/serverfarms/ASP-kalpeshRG-ae1e",
+            "type": "String"
+        },
+        "virtualNetworks_GrowGreenNGOVnet_externalid": {
+            "defaultValue": "/subscriptions/cfe77da3-9074-4f47-a959-c0ddfb2b4b94/resourceGroups/kalpeshRG/providers/Microsoft.Network/virtualNetworks/GrowGreenNGOVnet",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2022-09-01",
+            "name": "[parameters('sites_GrowGreenNGO_name')]",
+            "location": "East US",
+            "kind": "app,linux",
+            "properties": {
+                "enabled": true,
+                "hostNameSslStates": [
+                    {
+                        "name": "growgreenngo.azurewebsites.net",
+                        "sslState": "Disabled",
+                        "hostType": "Standard"
+                    },
+                    {
+                        "name": "growgreenngo.scm.azurewebsites.net",
+                        "sslState": "Disabled",
+                        "hostType": "Repository"
+                    }
+                ],
+                "serverFarmId": "[parameters('serverfarms_ASP_kalpeshRG_ae1e_externalid')]",
+                "reserved": true,
+                "isXenon": false,
+                "hyperV": false,
+                "vnetRouteAllEnabled": true,
+                "vnetImagePullEnabled": false,
+                "vnetContentShareEnabled": false,
+                "siteConfig": {
+                    "numberOfWorkers": 1,
+                    "linuxFxVersion": "PYTHON|3.10",
+                    "acrUseManagedIdentityCreds": false,
+                    "alwaysOn": false,
+                    "http20Enabled": false,
+                    "functionAppScaleLimit": 0,
+                    "minimumElasticInstanceCount": 0
+                },
+                "scmSiteAlsoStopped": false,
+                "clientAffinityEnabled": false,
+                "clientCertEnabled": false,
+                "clientCertMode": "Required",
+                "hostNamesDisabled": false,
+                "customDomainVerificationId": "52B4378ED0A6B997D4E2F5B647E09D41C21E7D4E5BECDD16EA882772058C8F17",
+                "containerSize": 0,
+                "dailyMemoryTimeQuota": 0,
+                "httpsOnly": false,
+                "redundancyMode": "None",
+                "storageAccountRequired": false,
+                "virtualNetworkSubnetId": "[concat(parameters('virtualNetworks_GrowGreenNGOVnet_externalid'), concat('/subnets/', parameters('sites_GrowGreenNGO_name'), 'AppSubnet'))]",
+                "keyVaultReferenceIdentity": "SystemAssigned"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
+            "apiVersion": "2022-09-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/ftp')]",
+            "location": "East US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ],
+            "properties": {
+                "allow": true
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
+            "apiVersion": "2022-09-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/scm')]",
+            "location": "East US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ],
+            "properties": {
+                "allow": true
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/config",
+            "apiVersion": "2022-09-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/web')]",
+            "location": "East US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ],
+            "properties": {
+                "numberOfWorkers": 1,
+                "defaultDocuments": [
+                    "Default.htm",
+                    "Default.html",
+                    "Default.asp",
+                    "index.htm",
+                    "index.html",
+                    "iisstart.htm",
+                    "default.aspx",
+                    "index.php",
+                    "hostingstart.html"
+                ],
+                "netFrameworkVersion": "v4.0",
+                "linuxFxVersion": "PYTHON|3.10",
+                "requestTracingEnabled": false,
+                "remoteDebuggingEnabled": false,
+                "httpLoggingEnabled": false,
+                "acrUseManagedIdentityCreds": false,
+                "logsDirectorySizeLimit": 35,
+                "detailedErrorLoggingEnabled": false,
+                "publishingUsername": "$GrowGreenNGO",
+                "scmType": "GitHubAction",
+                "use32BitWorkerProcess": true,
+                "webSocketsEnabled": false,
+                "alwaysOn": false,
+                "managedPipelineMode": "Integrated",
+                "virtualApplications": [
+                    {
+                        "virtualPath": "/",
+                        "physicalPath": "site\\wwwroot",
+                        "preloadEnabled": false
+                    }
+                ],
+                "loadBalancing": "LeastRequests",
+                "experiments": {
+                    "rampUpRules": []
+                },
+                "autoHealEnabled": false,
+                "vnetName": "bbe2d9a4-9322-4486-9b84-5d7c3bdccfa6_GrowGreenNGOAppSubnet",
+                "vnetRouteAllEnabled": true,
+                "vnetPrivatePortsCount": 0,
+                "localMySqlEnabled": false,
+                "ipSecurityRestrictions": [
+                    {
+                        "ipAddress": "Any",
+                        "action": "Allow",
+                        "priority": 2147483647,
+                        "name": "Allow all",
+                        "description": "Allow all access"
+                    }
+                ],
+                "scmIpSecurityRestrictions": [
+                    {
+                        "ipAddress": "Any",
+                        "action": "Allow",
+                        "priority": 2147483647,
+                        "name": "Allow all",
+                        "description": "Allow all access"
+                    }
+                ],
+                "scmIpSecurityRestrictionsUseMain": false,
+                "http20Enabled": false,
+                "minTlsVersion": "1.2",
+                "scmMinTlsVersion": "1.2",
+                "ftpsState": "FtpsOnly",
+                "preWarmedInstanceCount": 0,
+                "elasticWebAppScaleLimit": 0,
+                "functionsRuntimeScaleMonitoringEnabled": false,
+                "minimumElasticInstanceCount": 0,
+                "azureStorageAccounts": {}
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2022-09-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/03d96e52-e29c-4dfe-a58b-0e923c5087dd')]",
+            "location": "East US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"1a5f3e34bed9b0820a90454c52d538dddf890ad9\",\"repoName\":\"kalpesh521/GrowGreen-Web-Application\",\"actor\":\"kalpesh521\",\"slotName\":\"Production\",\"commitMessage\":\"csrf view added\"}",
+                "start_time": "2023-07-19T15:23:47.7703563Z",
+                "end_time": "2023-07-19T15:24:22.7834563Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2022-09-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/09412e24-2d0b-4d9b-8a5a-50eafdbf9d25')]",
+            "location": "East US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"db654300196c7e1efea24fe5c0b195c1fec96460\",\"repoName\":\"kalpesh521/GrowGreen-Web-Application\",\"actor\":\"kalpesh521\",\"slotName\":\"Production\",\"commitMessage\":\"Initial Commit\"}",
+                "start_time": "2023-07-19T14:50:45.1623526Z",
+                "end_time": "2023-07-19T14:51:22.8144183Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2022-09-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/0951f988-6c92-4a2f-9daa-53a2dce5742b')]",
+            "location": "East US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"75dd89a4e8977b14f79e5ee67f9a40ea2cf8371f\",\"repoName\":\"kalpesh521/GrowGreen-Web-Application\",\"actor\":\"kalpesh521\",\"slotName\":\"Production\",\"commitMessage\":\"changes in Settings.py\"}",
+                "start_time": "2023-07-19T15:02:28.6496272Z",
+                "end_time": "2023-07-19T15:03:02.1297776Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2022-09-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/4a266ba7-af55-440e-be23-2366b2b4090b')]",
+            "location": "East US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"fe5be6deeb94e22f34dc4d5b049daa5f96ac12f5\",\"repoName\":\"kalpesh521/GrowGreen-Web-Application\",\"actor\":\"kalpesh521\",\"slotName\":\"Production\",\"commitMessage\":\"Add or update the Azure App Service build and deployment workflow config\"}",
+                "start_time": "2023-07-18T12:10:00.7059564Z",
+                "end_time": "2023-07-18T12:16:40.0823293Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2022-09-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/637946d9-f8e8-4585-aece-41c131cb6e79')]",
+            "location": "East US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"53297eb91a90051a0874f828fea6786aa748a05e\",\"repoName\":\"kalpesh521/GrowGreen-Web-Application\",\"actor\":\"kalpesh521\",\"slotName\":\"Production\",\"commitMessage\":\"setting.py changed\"}",
+                "start_time": "2023-07-19T15:33:19.9779921Z",
+                "end_time": "2023-07-19T15:33:56.4148439Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2022-09-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/8643a266-f3a7-4096-b7b6-d22e5437bb6c')]",
+            "location": "East US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"8ec8b0211de4952d24a069a10218fb17cc9d511a\",\"repoName\":\"kalpesh521/GrowGreen-Web-Application\",\"actor\":\"kalpesh521\",\"slotName\":\"Production\",\"commitMessage\":\"Merge branch 'master' of https://github.com/kalpesh521/GrowGreen-Web-Application\"}",
+                "start_time": "2023-07-18T12:18:00.5106931Z",
+                "end_time": "2023-07-18T12:22:52.4039965Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2022-09-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/8f099db9-e0b8-41c7-8957-985888cd8f5f')]",
+            "location": "East US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"4efc3649b131ace6efb4b6fb3d96cdec5a1f08f3\",\"repoName\":\"kalpesh521/GrowGreen-Web-Application\",\"actor\":\"kalpesh521\",\"slotName\":\"Production\",\"commitMessage\":\"setting.py changed\"}",
+                "start_time": "2023-07-19T15:43:25.8321415Z",
+                "end_time": "2023-07-19T15:44:00.2530217Z",
+                "active": true
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2022-09-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/bcc5d55d-711a-48d8-bfb5-d4ffc0dfc22b')]",
+            "location": "East US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"2e37120c7e19c930b262c0d3dcef77949fa9bf10\",\"repoName\":\"kalpesh521/GrowGreen-Web-Application\",\"actor\":\"kalpesh521\",\"slotName\":\"Production\",\"commitMessage\":\"Settings.py changed\"}",
+                "start_time": "2023-07-19T03:50:05.7256286Z",
+                "end_time": "2023-07-19T03:55:21.2980968Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2022-09-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/eb6e3d22-8bd1-44da-9e1b-82c68ef7f099')]",
+            "location": "East US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"a2dbb9725457de375e89ff724cf9392a7f481c15\",\"repoName\":\"kalpesh521/GrowGreen-Web-Application\",\"actor\":\"kalpesh521\",\"slotName\":\"Production\",\"commitMessage\":\"setting.py changed\"}",
+                "start_time": "2023-07-19T15:37:40.9755089Z",
+                "end_time": "2023-07-19T15:38:19.272085Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/hostNameBindings",
+            "apiVersion": "2022-09-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/', parameters('sites_GrowGreenNGO_name'), '.azurewebsites.net')]",
+            "location": "East US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ],
+            "properties": {
+                "siteName": "GrowGreenNGO",
+                "hostNameType": "Verified"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-18T12_17_54_3224874')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-18T13_17_54_4436220')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-18T14_17_54_5888814')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-18T15_17_54_6988959')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-18T16_17_54_8412183')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-18T17_17_54_9563342')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-18T18_17_55_1216487')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-18T19_17_55_2218284')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-18T20_17_55_3569431')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-18T21_17_55_4693115')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-18T22_17_55_6175422')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-18T23_17_55_7268369')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T00_17_55_8376784')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T01_17_55_9720746')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T02_17_56_1027769')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T03_17_56_2262056')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T04_17_56_3540546')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T05_17_56_4846408')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T06_17_56_6073277')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T07_17_56_7619684')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T08_17_56_8838172')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T09_17_57_0012414')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T10_17_57_1352560')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T11_17_57_2616602')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T12_17_57_3903165')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T13_17_57_5140518')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T14_17_57_6529915')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T15_17_57_8014635')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T16_17_57_9213509')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T17_17_58_0437734')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T18_17_58_1643886')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T19_17_58_2815424')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T20_17_58_4199033')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T21_17_58_5600728')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T22_17_58_7084319')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-19T23_17_58_8244062')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-20T00_17_58_9508623')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-20T01_17_59_0845091')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-20T02_17_59_1949715')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-20T03_17_59_3479825')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/2023-07-20T04_17_59_4604958')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/virtualNetworkConnections",
+            "apiVersion": "2022-09-01",
+            "name": "[concat(parameters('sites_GrowGreenNGO_name'), '/bbe2d9a4-9322-4486-9b84-5d7c3bdccfa6_', parameters('sites_GrowGreenNGO_name'), 'AppSubnet')]",
+            "location": "East US",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_GrowGreenNGO_name'))]"
+            ],
+            "properties": {
+                "vnetResourceId": "[concat(parameters('virtualNetworks_GrowGreenNGOVnet_externalid'), '/subnets/GrowGreenNGOAppSubnet')]",
+                "isSwift": true
+            }
+        }
+    ]
+}
